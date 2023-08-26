@@ -68,10 +68,6 @@ class GLTilemap {
     this.tiles.setInterpolation(this.gl.NEAREST, this.gl.NEAREST);
   }
   
-  clear() {
-    this.tilemap.clear();
-  }
-  
   display() {
     shader(this.shad);
     {
