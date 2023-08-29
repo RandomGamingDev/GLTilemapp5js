@@ -119,9 +119,9 @@ GLTilemap.fragShader = `#version 300 es
 
   in vec2 vTexCoord;
 
+  uniform sampler2D atlas;
   uniform mediump usampler2D uSampler;
   uniform mediump usampler2D tiles;
-  uniform sampler2D atlas;
 
   out vec4 fragColor;
 
