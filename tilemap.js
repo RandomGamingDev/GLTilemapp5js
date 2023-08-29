@@ -74,6 +74,10 @@ class GLTilemap {
       const cachedSamplers = this.shad.samplers;
       this.shad.samplers = [];
 
+      this.gl.activeTexture(this.gl.TEXTURE0);
+      this.gl.bindTexture(this.gl.TEXTURE_2D, this.img.texture.glTex);
+      this.gl.uniform1i(this.gl.getUniformLocation(this.shad._glProgram, "atlas"), 0);
+
       this.tilemap.img.activate();
       this.tilemap.img.bind();
       this.tilemap.img.setUniform(this.shad._glProgram, "uSampler");
@@ -81,10 +85,6 @@ class GLTilemap {
       this.tiles.img.activate();
       this.tiles.img.bind();
       this.tiles.img.setUniform(this.shad._glProgram, "tiles");
-
-      this.gl.activeTexture(this.gl.TEXTURE0);
-      this.gl.bindTexture(this.gl.TEXTURE_2D, this.img.texture.glTex);
-      this.gl.uniform1i(this.gl.getUniformLocation(this.shad._glProgram, "atlas"), this.img.texture.glTex);
 
       this.tilemap.rdr.rect(this.tilemap.off[0], this.tilemap.off[1], this.tilemap.size[0], this.tilemap.size[1]);
 
