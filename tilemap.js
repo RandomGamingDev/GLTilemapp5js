@@ -64,7 +64,7 @@ class GLTilemap {
     let tilesTex = new Texture.T2D(0, this.gl.RGBA16UI, tilesList.length, 1, 2, 0, this.gl.RGBA_INTEGER, this.gl.UNSIGNED_SHORT, tilesData, this.gl);
     tilesTex.bind();
 
-    this.tiles = new GLPixy([0, 0], [0, 0], tilesTex, 1, this.fbo, true, true, this.rdr, this.canvas);
+    this.tiles = new GLPixy([0, 0], [0, 0], tilesTex, 1, this.fbo, false, false, this.rdr, this.canvas);
     this.tiles.setInterpolation(this.gl.NEAREST, this.gl.NEAREST);
   }
   
