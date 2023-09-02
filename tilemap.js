@@ -71,7 +71,6 @@ class GLTilemap {
   display() {
     shader(this.shad);
     //this.shad.bindShader();
-    console.log(gl.getError());
     {
       const cachedSamplers = this.shad.samplers;
       this.shad.samplers = [];
