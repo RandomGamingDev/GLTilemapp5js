@@ -16,26 +16,26 @@ class GLTilemap {
       this.gl = canvas.drawingContext;
     }
     
-    // Load shared FBO
-    if (fbo == undefined)
-      this.fbo = new Framebuffer(this.gl);
-    else
-      this.fbo = fbo;
-    this.fbo.bind();
+    { // Load WebGL stuff
+       // Chrome can't load the texture properly without this for some reason otherwise it complains about the type and format not being valid
+      this.gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
 
-    // Load tilemap texture
-    this.loadTilemap();
-    
-    // Load tileset texture
-    this.loadTiles(tilesList)
-    
-    // Unbind the shared fbo
-    this.fbo.unbind();
-    
-    // Countering predefined weird p5.js caching stuff
-    shader(this.shad);
-    rect(0, 0, 0, 0);
-    this.gl.getError(); // The 1282 error here doesn't appear to be important and can be discarded
+      // Load shared FBO
+      if (fbo == undefined)
+        this.fbo = new Framebuffer(this.gl);
+      else
+        this.fbo = fbo;
+      this.fbo.bind();
+
+      // Load tilemap texture
+      this.loadTilemap();
+      
+      // Load tileset texture
+      this.loadTiles(tilesList)
+      
+      // Unbind the shared fbo
+      this.fbo.unbind();
+    }
   }
   
   loadTilemap() {
@@ -64,12 +64,14 @@ class GLTilemap {
     let tilesTex = new Texture.T2D(0, this.gl.RGBA16UI, tilesList.length, 1, 2, 0, this.gl.RGBA_INTEGER, this.gl.UNSIGNED_SHORT, tilesData, this.gl);
     tilesTex.bind();
 
-    this.tiles = new GLPixy([0, 0], [0, 0], tilesTex, 1, this.fbo, false, false, this.rdr, this.canvas);
+    this.tiles = new GLPixy([0, 0], [0, 0], tilesTex, 1, this.fbo, true, true, this.rdr, this.canvas);
     this.tiles.setInterpolation(this.gl.NEAREST, this.gl.NEAREST);
   }
   
   display() {
     shader(this.shad);
+    //this.shad.bindShader();
+    console.log(gl.getError());
     {
       const cachedSamplers = this.shad.samplers;
       this.shad.samplers = [];
