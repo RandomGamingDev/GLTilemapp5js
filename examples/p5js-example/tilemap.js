@@ -36,9 +36,7 @@ class GLTilemap {
       // Unbind the shared fbo
       this.fbo.unbind();
 
-      shader(this.shad);
-      rect(0, 0, 0, 0);
-      this.gl.getError(); // The 1282 error here doesn't appear to be important and can be discarded
+      this.shad.bindShader();
     }
   }
   
@@ -74,7 +72,6 @@ class GLTilemap {
   
   display() {
     shader(this.shad);
-    //this.shad.bindShader();
     {
       const cachedSamplers = this.shad.samplers;
       this.shad.samplers = [];
