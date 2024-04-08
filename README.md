@@ -1,6 +1,8 @@
 # GLTilemapp5js
 A tilemap library for p5.js's OpenGL mode that is optimized to draw tilemaps within a single draw call
 
+<img src="GLTilemapp5js.png" width="128" />
+
 Here's an example showing how to use the library https://github.com/RandomGamingDev/GLTilemapp5js/tree/main/examples/p5js-example. You can see the example here: https://raw.githack.com/RandomGamingDev/GLTilemapp5js/main/examples/p5js-example/index.html.
 
 This library requires the following libraries which are to be imported in the following order:
