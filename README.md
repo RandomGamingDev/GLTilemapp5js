@@ -1,5 +1,5 @@
 # GLTilemapp5js
-A tilemap library for p5.js's OpenGL mode that is optimized to draw tilemaps within a single draw call
+A tilemap library for p5.js's OpenGL mode that is optimized to draw tilemaps within a single draw call using WebGL
 
 <img src="GLTilemapp5js.png" width="128" />
 
