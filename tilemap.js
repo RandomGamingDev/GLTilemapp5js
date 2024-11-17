@@ -142,7 +142,6 @@ GLTilemap.fragShader = `#version 300 es
     vec2 tilemapSize = vec2(textureSize(uSampler, 0));
     vec2 tileSize = 1.0 / tilemapSize;
     vec2 tileTexCoord = mod(vTexCoord, tileSize) * tilemapSize;
-    tileTexCoord.y = 1.0 - tileTexCoord.y;
 
     fragColor = texture(atlas, fCoords.rg + tileTexCoord * fCoords.ba);
   }
