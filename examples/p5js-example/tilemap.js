@@ -1,7 +1,7 @@
 class GLTilemap {
   constructor(pos, size, res, img, tilemapData, tilesList,
               shad = createShader(GLTilemap.vertShader, GLTilemap.fragShader),
-              fbo, rdr = window, canvas = _renderer) {
+              rdr = window, canvas = _renderer) {
     { // Load parameters
       this.pos = pos;
       this.size = size;
@@ -20,21 +20,11 @@ class GLTilemap {
        // Chrome can't load the texture properly without this for some reason otherwise it complains about the type and format not being valid
       this.gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
 
-      // Load shared FBO
-      if (fbo == undefined)
-        this.fbo = new Framebuffer(this.gl);
-      else
-        this.fbo = fbo;
-      this.fbo.bind();
-
       // Load tilemap texture
       this.loadTilemap();
       
       // Load tileset texture
       this.loadTiles(tilesList)
-      
-      // Unbind the shared fbo
-      this.fbo.unbind();
 
       this.shad.bindShader();
     }
@@ -44,7 +34,7 @@ class GLTilemap {
       let tilemapTex = new Texture.T2D(0, this.gl.R16UI, this.res[0], this.res[1], 1, 0, this.gl.RED_INTEGER, this.gl.UNSIGNED_SHORT, this.tilemapData, this.gl);
       tilemapTex.bind();
     
-      this.tilemap = new GLPixy(this.pos, this.size, tilemapTex, 1, this.fbo, true, true, this.rdr, this.canvas);
+      this.tilemap = new GLPixy(this.pos, this.size, tilemapTex, 1, null, false, false, this.rdr, this.canvas);
       this.tilemap.setInterpolation(this.gl.NEAREST, this.gl.NEAREST);
   }
 
@@ -66,7 +56,7 @@ class GLTilemap {
     let tilesTex = new Texture.T2D(0, this.gl.RGBA16UI, tilesList.length, 1, 2, 0, this.gl.RGBA_INTEGER, this.gl.UNSIGNED_SHORT, tilesData, this.gl);
     tilesTex.bind();
 
-    this.tiles = new GLPixy([0, 0], [0, 0], tilesTex, 1, this.fbo, true, true, this.rdr, this.canvas);
+    this.tiles = new GLPixy([0, 0], [0, 0], tilesTex, 1, null, false, false, this.rdr, this.canvas);
     this.tiles.setInterpolation(this.gl.NEAREST, this.gl.NEAREST);
   }
   
@@ -79,7 +69,7 @@ class GLTilemap {
       this.gl.activeTexture(this.gl.TEXTURE0);
       this.gl.bindTexture(this.gl.TEXTURE_2D, this.img.texture.glTex);
       this.gl.uniform1i(this.gl.getUniformLocation(this.shad._glProgram, "atlas"), 0);
-
+      
       this.tilemap.img.activate();
       this.tilemap.img.bind();
       this.tilemap.img.setUniform(this.shad._glProgram, "uSampler");
@@ -88,7 +78,7 @@ class GLTilemap {
       this.tiles.img.bind();
       this.tiles.img.setUniform(this.shad._glProgram, "tiles");
 
-      this.tilemap.rdr.rect(this.tilemap.off[0], this.tilemap.off[1], this.tilemap.size[0], this.tilemap.size[1]);
+      this.rdr.rect(this.tilemap.off[0], this.tilemap.off[1], this.tilemap.size[0], this.tilemap.size[1]);
 
       this.tilemap.img.unbind();
 
