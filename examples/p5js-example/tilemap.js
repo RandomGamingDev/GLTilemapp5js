@@ -31,7 +31,7 @@ class GLTilemap {
   }
   
   loadTilemap() {
-      let tilemapTex = new Texture.T2D(0, this.gl.R16UI, this.res[0], this.res[1], 1, 0, this.gl.RED_INTEGER, this.gl.UNSIGNED_SHORT, this.tilemapData, this.gl); // slot 1
+      let tilemapTex = new Texture.T2D(0, this.gl.R16UI, this.res[0], this.res[1], 1, 0, this.gl.RED_INTEGER, this.gl.UNSIGNED_SHORT, this.tilemapData, this.gl);
       tilemapTex.bind();
     
       this.tilemap = new GLPixy(this.pos, this.size, tilemapTex, 1, null, false, false, this.rdr, this.canvas);
@@ -53,7 +53,7 @@ class GLTilemap {
       }
     }
 
-    let tilesTex = new Texture.T2D(0, this.gl.RGBA16UI, tilesList.length, 1, 2, 0, this.gl.RGBA_INTEGER, this.gl.UNSIGNED_SHORT, tilesData, this.gl); // slot 2
+    let tilesTex = new Texture.T2D(0, this.gl.RGBA16UI, tilesList.length, 1, 2, 0, this.gl.RGBA_INTEGER, this.gl.UNSIGNED_SHORT, tilesData, this.gl);
     tilesTex.bind();
 
     this.tiles = new GLPixy([0, 0], [0, 0], tilesTex, 1, null, false, false, this.rdr, this.canvas);
