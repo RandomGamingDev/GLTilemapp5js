@@ -17,7 +17,7 @@ class GLTilemap {
     }
     
     { // Load WebGL stuff
-       // Chrome can't load the texture properly without this for some reason otherwise it complains about the type and format not being valid
+        // Chrome can't load the texture properly without this for some reason otherwise it complains about the type and format not being valid
       this.gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
 
       // Load tilemap texture
@@ -125,13 +125,11 @@ GLTilemap.fragShader = `#version 300 es
       return;
     }
 
-    const uint MAX_UNSIGNED_SHORT = uint(pow(2.0, 16.0)) - uint(1);
+    const float MAX_UNSIGNED_SHORT = pow(2.0, 16.0) - 1.0;
     uvec4 iCoords = texelFetch(tiles, ivec2(tile - uint(1), 0), 0);
-    vec4 fCoords = vec4(iCoords) / float(MAX_UNSIGNED_SHORT);
+    vec4 fCoords = vec4(iCoords) / MAX_UNSIGNED_SHORT;
 
-    vec2 tilemapSize = vec2(textureSize(tilemap, 0));
-    vec2 tileSize = 1.0 / tilemapSize;
-    vec2 tileTexCoord = mod(vTexCoord, tileSize) * tilemapSize;
+    vec2 tileTexCoord = mod(vTexCoord * vec2(textureSize(tilemap, 0)), 1.0) + 1e-3;
 
     fragColor = texture(atlas, fCoords.rg + tileTexCoord * fCoords.ba);
   }
